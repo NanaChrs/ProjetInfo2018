@@ -1,0 +1,74 @@
+<!-- affichage de l'heure -->
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<link rel="stylesheet" href="style.css"/> <!-- nécessite de créer un nouveau fichier CSS qui donnera les correspondances en CSS de notre code) -->
+		<title> affichage réveil</title>
+		<script type="text/javascript" src="jquery-2.2.4.min.js"></script>
+		<script type="text/javascript" src="jquery.signalr-2.2.2.min.js"></script>
+		<script type="text/javascript" src="Constellation-1.8.2.min.js"></script>
+	</head>
+	<body>
+		<script type="text/javascript">
+		var constellation = $.signalR.createConstellationConsumer("http://localhost:8088", "123456789", "Test API JS");
+		constellation.connection.start();
+		constellation.connection.stateChanged(function (change) {
+    		if (change.newState === $.signalR.connectionState.connected) {
+        		console.log("Je suis connecté");
+        		constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "DayInfo", "NameDay", "*", function (so) {
+            console.log(so);
+            $("#InfoName").text(so.Value);
+    		});
+
+
+    		constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "DayInfo", "SunInfo", "*", function (so) {
+            console.log(so);
+            var d = new Date(so.Value.Date);
+            $("#year").text(d.getFullYear());
+            var mois=d.getMonth()+1;
+            $("#month").text((mois<10?'0':'')+mois);
+            $("#day").text((d.getDate()<10?'0':'')+d.getDate());
+    	});
+
+    		constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "DayInfo", "NameDay", "*", function (so) {
+            console.log(so);
+
+         });
+		}});
+	</script>
+
+
+<div id="page1">
+		<div id="div_horloge">
+			<script type="text/javascript">
+				window.onload=function() {
+	  				horloge('div_horloge');
+				};
+	 
+				function horloge(el) {
+	  				if(typeof el=="string") { el = document.getElementById(el); }
+	  				function actualiser() {
+	    				var date = new Date();
+	    				var str = date.getHours();
+	    				str += ':'+(date.getMinutes()<10?'0':'')+date.getMinutes();
+	    				el.innerHTML = str;
+	  				}
+	  				actualiser();
+	  				setInterval(actualiser,1000);
+				}
+			</script>
+		</div>
+	<img src="next.png" href="#InfoName" id="next1"/>
+</div>
+
+
+<div id="InfoName"></div>
+<span id="day"></span>/<span id="month"></span>/<span id=year ></span>
+
+
+</body>
+</html>
+
+
+
