@@ -31,9 +31,12 @@
             $("#day").text((d.getDate()<10?'0':'')+d.getDate());
     	});
 
-    		constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "DayInfo", "NameDay", "*", function (so) {
+    		constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "GoogleCalendar", "Events", "*", function (so) {
             console.log(so);
-
+            	$("#AgendaNom").text(so.Value[0].Nom);
+            	$("#DateDebut").text(so.Value[0].DateDebut);
+            	$("#DateFin").text(so.Value[0].DateFin);
+            	$("#Lieu").text(so.Value[0].Lieu);
          });
 		}});
 	</script>
@@ -59,13 +62,24 @@
 				}
 			</script>
 		</div>
-	<img src="next.png" href="#InfoName" id="next1"/>
+	<a href="#page2"><img src="next.png" id="next1"/></a>
 </div>
 
 
-<div id="InfoName"></div>
-<span id="day"></span>/<span id="month"></span>/<span id=year ></span>
-
+<div id=page2>
+	<a href="#page1"><img src="back.png"/></a>
+	<div id="Infodujour">	
+		<div>
+		<span id="day"></span>/<span id="month"></span>/<span id=year ></span>
+	</div>
+	<div id="InfoName"></div></div>
+	<div id="Agenda">
+		<div id="AgendaNom"></div>
+		<div id="DateDebut"></div>
+		<div id="DateFin"></div>
+		<div id="Lieu"></div>
+	</div>
+</div>
 
 </body>
 </html>
