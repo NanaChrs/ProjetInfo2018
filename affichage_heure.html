@@ -4,13 +4,19 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<link rel="stylesheet" href="style.css"/> <!-- nécessite de créer un nouveau fichier CSS qui donnera les correspondances en CSS de notre code) -->
+		<link rel="stylesheet" href="semantic-UI-CSS-master/semantic.min.css"/>
 		<title> affichage réveil</title>
-		<script type="text/javascript" src="jquery-2.2.4.min.js"></script>
-		<script type="text/javascript" src="jquery.signalr-2.2.2.min.js"></script>
-		<script type="text/javascript" src="Constellation-1.8.2.min.js"></script>
+		<script type="text/javascript" src="semantic-UI-CSS-master/semantic.min.js"></script>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    	<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.2.2.min.js"></script>
+    	<script type="text/javascript" src="https://cdn.myconstellation.io/js/Constellation-1.8.2.min.js"></script>
+    	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    	<script type="text/javascript" src="https://cdn.myconstellation.io/js/ngConstellation-1.8.2.min.js"></script>
 	</head>
 	<body>
 		<script type="text/javascript">
+		var temps;
+		var adresse;
 		var constellation = $.signalR.createConstellationConsumer("http://localhost:8088", "123456789", "Test API JS");
 		constellation.connection.start();
 		constellation.connection.stateChanged(function (change) {
@@ -32,13 +38,34 @@
     	});
 
     		constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "GoogleCalendar", "Events", "*", function (so) {
-            console.log(so);
             	$("#AgendaNom").text(so.Value[0].Nom);
             	$("#DateDebut").text(so.Value[0].DateDebut);
             	$("#DateFin").text(so.Value[0].DateFin);
             	$("#Lieu").text(so.Value[0].Lieu);
-         });
-		}});
+            	var lieu=so.Value[0].Lieu;
+            	if (lieu==null){
+            		lieu="ISEN Lille";
+            	}
+
+            	constellation.server.sendMessageWithSaga(function(response){
+				lat=response.Data.latitude;
+				lng=response.Data.longitude;
+				constellation.server.sendMessageWithSaga(function(reponse){
+					console.log(reponse.Data.currently);
+					var degre=Math.round(reponse.Data.currently.apparentTemperature);
+					$("#Temperature").text(degre);
+					var png=reponse.Data.currently.icon;
+					document.getElementById("icon").src="images/"+png+".png";
+					
+					
+				},{Scope:'Package',Args:['ForecastIO']},'GetWeatherForecast',lng,lat);
+
+			}, {Scope:'Package', Args:['GeocodingApi']},'CoordoneesGPS',lieu)})
+            	
+         }});
+
+
+			;
 	</script>
 
 
@@ -62,23 +89,88 @@
 				}
 			</script>
 		</div>
-	<a href="#page2"><img src="next.png" id="next1"/></a>
+	<a href="#page2"><img src="images/next.png" id="next1"/></a>
 </div>
 
 
-<div id=page2>
-	<a href="#page1"><img src="back.png"/></a>
+<div id="page2">
+	<a href="#page1"><img src="images/back.png"/></a>
 	<div id="Infodujour">	
 		<div>
 		<span id="day"></span>/<span id="month"></span>/<span id=year ></span>
+		</div>
+	<div id="InfoName"></div>
+	<div id="Meteo">
+		<div>
+		<span id="Temperature"></span>°C
 	</div>
-	<div id="InfoName"></div></div>
+		<div><img src="" id="icon"/></div>
+	</div>
+	</div>
 	<div id="Agenda">
+		<h3> Prochain rendez-vous :</h3>
 		<div id="AgendaNom"></div>
-		<div id="DateDebut"></div>
-		<div id="DateFin"></div>
+		<div id="DateDebut"></di>
 		<div id="Lieu"></div>
+		
 	</div>
+
+</div>
+<a href="#page3"><img src="images/next.png" /></a>
+</div>
+
+<div id="page3">
+	<div><a href="#page2"><img src="images/back.png"/></a></div>
+	<div>
+	<h3>Paramètres :</h3>
+	<form method="post" action="traitement.php" id="formulaire" class>
+	<div class="ui toggle checkbox">
+		<input type="checkbox" name="modeauto">
+		<label>Activer le réveil</label>
+	</div></br>
+	<div class="ui toggle checkbox">
+		<input type="checkbox" name="modeauto" >
+		<label>Activer le mode manuel</label>
+	</div></br>
+	<div> Veuillez entrer l'heure prévue du prochain réveil:<input type="time" class="/></div>
+
+	<div class="ui form">
+  <div class="inline fields">
+    <label>Que voulez-vous afficher ?</label>
+    <div class="field">
+      <div class="ui checkbox">
+        <input type="checkbox" name="choix_meteo">
+        <label>Météo</label>
+      </div>
+    </div>
+    <div class="field">
+      <div class="ui checkbox">
+        <input type="checkbox" name="choix_agenda">
+        <label>Agenda</label>
+      </div>
+    </div>
+    <div class="field">
+      <div class="ui checkbox">
+        <input type="checkbox" name="choix_fete">
+        <label>Fête du jour</label>
+      </div>
+    </div>
+    <div class="field">
+      <div class="ui checkbox">
+        <input type="checkbox" name="choix_date">
+        <label>Date du jour</label>
+      </div>
+    </div>
+    <div class="field">
+      <div class="ui checkbox">
+        <input type="checkbox" name="choix_traffic">
+        <label>Info traffic</label>
+      </div>
+    </div>
+  </div>
+</div>
+	</form>
+</div>
 </div>
 
 </body>
