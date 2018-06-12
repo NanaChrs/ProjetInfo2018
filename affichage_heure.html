@@ -3,8 +3,6 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<link rel="stylesheet" href="style.css"/> <!-- nécessite de créer un nouveau fichier CSS qui donnera les correspondances en CSS de notre code) -->
-		<link rel="stylesheet" href="semantic-UI-CSS-master/semantic.min.css"/>
 		<title> affichage réveil</title>
 		<script type="text/javascript" src="semantic-UI-CSS-master/semantic.min.js"></script>
 		<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
@@ -12,8 +10,10 @@
     	<script type="text/javascript" src="https://cdn.myconstellation.io/js/Constellation-1.8.2.min.js"></script>
     	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
     	<script type="text/javascript" src="https://cdn.myconstellation.io/js/ngConstellation-1.8.2.min.js"></script>
+    	<link rel="stylesheet" href="style.css"/> <!-- nécessite de créer un nouveau fichier CSS qui donnera les correspondances en CSS de notre code) -->
+		<link rel="stylesheet" href="semantic-UI-CSS-master/semantic.min.css"/>
 	</head>
-	<body>
+	<body ng-controller="MyController">
 		<script type="text/javascript">
 		var temps;
 		var adresse;
@@ -63,11 +63,30 @@
 			}, {Scope:'Package', Args:['GeocodingApi']},'CoordoneesGPS',lieu)})
             	
          }});
-
-
 			;
-	</script>
+;
+	  EnableAuto = function(val){
+	  	var modeauto=document.getElementById("modeauto");
 
+	  	if(val.checked==true){
+	  		modeauto.disabled=false;
+	  	}
+	  	else{
+	  		modeauto.disabled=true;
+	  		modeauto.checked=false;
+	  	}
+	  }
+
+	  function hide() {
+    var x = document.getElementById("HideTime");
+    console.log("je ne suis pas caché è_é")
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+</script>
 
 <div id="page1">
 		<div id="div_horloge">
@@ -123,16 +142,19 @@
 	<div><a href="#page2"><img src="images/back.png"/></a></div>
 	<div>
 	<h3>Paramètres :</h3>
+
+
 	<form method="post" action="traitement.php" id="formulaire" class>
 	<div class="ui toggle checkbox">
-		<input type="checkbox" name="modeauto">
+		<input type="checkbox" name="activation" id="activation" onClick="EnableAuto(this)">
 		<label>Activer le réveil</label>
 	</div></br>
 	<div class="ui toggle checkbox">
-		<input type="checkbox" name="modeauto" >
-		<label>Activer le mode manuel</label>
+		<input type="checkbox" name="modeauto" id="modeauto" onClick="hide()">
+		<label>Activer le mode automatique</label>
 	</div></br>
-	<div> Veuillez entrer l'heure prévue du prochain réveil:<input type="time" class="/></div>
+	<div id="HideTime"><label> <strong>Veuillez entrer l'heure prévue du prochain réveil: </strong></label> <input type="time" id="time"/> </div>
+
 
 	<div class="ui form">
   <div class="inline fields">
@@ -169,6 +191,7 @@
     </div>
   </div>
 </div>
+<div class="ui primary submit button">Valider</div>
 	</form>
 </div>
 </div>
