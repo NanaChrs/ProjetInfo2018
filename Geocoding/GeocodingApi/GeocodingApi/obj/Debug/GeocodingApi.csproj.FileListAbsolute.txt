@@ -1,0 +1,16 @@
+D:\Desktop\Projet Reveil de la night\Geocoding\GeocodingApi\GeocodingApi\bin\Debug\PackageInfo.xml
+D:\Desktop\Projet Reveil de la night\Geocoding\GeocodingApi\GeocodingApi\bin\Debug\GeocodingApi.exe.config
+D:\Desktop\Projet Reveil de la night\Geocoding\GeocodingApi\GeocodingApi\bin\Debug\GeocodingApi.XML
+D:\Desktop\Projet Reveil de la night\Geocoding\GeocodingApi\GeocodingApi\bin\Debug\GeocodingApi.exe
+D:\Desktop\Projet Reveil de la night\Geocoding\GeocodingApi\GeocodingApi\bin\Debug\GeocodingApi.pdb
+D:\Desktop\Projet Reveil de la night\Geocoding\GeocodingApi\GeocodingApi\bin\Debug\Constellation.Common.dll
+D:\Desktop\Projet Reveil de la night\Geocoding\GeocodingApi\GeocodingApi\bin\Debug\Microsoft.AspNet.SignalR.Client.dll
+D:\Desktop\Projet Reveil de la night\Geocoding\GeocodingApi\GeocodingApi\bin\Debug\Newtonsoft.Json.dll
+D:\Desktop\Projet Reveil de la night\Geocoding\GeocodingApi\GeocodingApi\bin\Debug\Constellation.Common.xml
+D:\Desktop\Projet Reveil de la night\Geocoding\GeocodingApi\GeocodingApi\bin\Debug\Microsoft.AspNet.SignalR.Client.xml
+D:\Desktop\Projet Reveil de la night\Geocoding\GeocodingApi\GeocodingApi\bin\Debug\Newtonsoft.Json.xml
+D:\Desktop\Projet Reveil de la night\Geocoding\GeocodingApi\GeocodingApi\obj\Debug\GeocodingApi.csprojAssemblyReference.cache
+D:\Desktop\Projet Reveil de la night\Geocoding\GeocodingApi\GeocodingApi\obj\Debug\GeocodingApi.csproj.CoreCompileInputs.cache
+D:\Desktop\Projet Reveil de la night\Geocoding\GeocodingApi\GeocodingApi\obj\Debug\GeocodingApi.csproj.CopyComplete
+D:\Desktop\Projet Reveil de la night\Geocoding\GeocodingApi\GeocodingApi\obj\Debug\GeocodingApi.exe
+D:\Desktop\Projet Reveil de la night\Geocoding\GeocodingApi\GeocodingApi\obj\Debug\GeocodingApi.pdb

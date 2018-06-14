@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="MyDemoApp">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="style.css"/>
+    <link href="semantic-UI-CSS-master/semantic.min.css"/>
+    <title>Réveil sous AngularJS</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.2.2.min.js"></script>
+    <script type="text/javascript" src="https://cdn.myconstellation.io/js/Constellation-1.8.2.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdn.myconstellation.io/js/ngConstellation-1.8.2.min.js"></script>
+    
+    <script>
+        var Lieu;
+        var myDemoApp = angular.module('MyDemoApp', ['ngConstellation']);
+        myDemoApp.controller('MyController', ['$scope',  'constellationConsumer', function ($scope, constellation) {
+            $scope.Math=Math;
+            $scope.Day={};
+            constellation.initializeClient("http://localhost:8088", "123456789", "Test API JS");
+
+            constellation.connect();
+            constellation.onConnectionStateChanged(function (change) {
+             if (change.newState === $.signalR.connectionState.connected) {
+                console.log("Je suis connecté !");
+                constellation.registerStateObjectLink("*","DayInfo","*","*",function(so){
+                    $scope.Day[so.Name]=so;
+                    $scope.$apply();
+                });
+                constellation.registerStateObjectLink("*","GoogleCalendar","Events","*",function(so){
+                    $scope.Events=so.Value;
+                    $scope.$apply();
+                    var lieu=so.Value[0].Lieu;
+                    if(lieu==null){
+                        lieu="ISEN Lille";
+                    }
+                    constellation.sendMessageWithSaga(function(response){
+                        console.log("br");
+                        $scope.$applly(function(){
+                            $scope.lat=response.latitude;
+                            $scope.lng=response.longitude;
+                            constellation.sendMessageWithSaga(function(reponse){
+                                $scope.$apply(function(){
+                                    $scope.Temperature=reponse.Value;
+                                    var png=reponse.Data.currently.icon;
+                                    document.getElementById("icon").src=png+".png";
+                                });
+                            },{Scope: 'Package', Args: ['ForecastIO']},'GetWeatherForecast',lng,lat)});
+                        },{Scope:'Package', Args:['GeocodingAPI']},'CoordoneesGPS',lieu);
+                });
+                
+                        }
+        });
+        }]);
+    </script>
+</head>
+
+<body ng-controller="MyController">
+    <div id="page1">
+        <div id="div_horloge">
+            <script type="text/javascript">
+                window.onload=function() {
+                    horloge('div_horloge');
+                };
+     
+                function horloge(el) {
+                    if(typeof el=="string") { el = document.getElementById(el); }
+                    function actualiser() {
+                        var date = new Date();
+                        var str = date.getHours();
+                        str += ':'+(date.getMinutes()<10?'0':'')+date.getMinutes();
+                        el.innerHTML = str;
+                    }
+                    actualiser();
+                    setInterval(actualiser,1000);
+                }
+            </script>
+        </div>
+    <a href="#page2"><img src="images/next.png" id="next1"/></a>
+</div>
+
+
+<div id="page2">
+    <a href="#page1"><img src="images/back.png"/></a>
+    <div id="Infodujour">   
+        <div>
+        {{Day.SunInfo.Value.Date |date : 'dd/MM/yyyy'}}
+        </div>
+    <div id="InfoName">
+        {{Day.NameDay.Value}}
+    </div>
+    <div id="Meteo">
+        <div>
+        <span id="Temperature">{{Temperature.currently.apparentTemperature}}</span>°C
+    </div>
+        <div><img src="" id="icon"/></div>
+    </div>
+    </div>
+    <div id="Agenda">
+        <h3> Prochain rendez-vous :</h3>
+        <div>{{Events[0].Nom}}</div>
+        <div>{{Events[0].DateDebut}}</div>
+            <div id="Lieu">{{Events[0].Lieu===null?'Aucun lieu indiqué':Events[0].Lieu}}</div>
+    </div>
+</div>
+<div id="page3"></div>
+ 
+</body>
+</html>

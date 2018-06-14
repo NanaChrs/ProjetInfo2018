@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GoogleCalendar</name>
+    </assembly>
+    <members>
+        <member name="M:GoogleCalendar.Program.GetAgenda">
+            <summary>
+            Permet de mettre à jour le StateObject Events de Google Calendar
+            </summary>
+        </member>
+    </members>
+</doc>

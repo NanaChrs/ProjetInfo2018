@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ReadSpeaker</name>
+    </assembly>
+    <members>
+        <member name="M:ReadSpeaker.Program.LireTexte(System.String,System.Int32)">
+            <summary>
+            Permet de lire un texte !
+            </summary>
+            <param name="Texte">Le texte à lire</param>
+            <param name="speed">Donne la vitesse de lecture entre 0 et 200 (100 par défaut)</param>
+        </member>
+    </members>
+</doc>
