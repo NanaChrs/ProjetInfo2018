@@ -1,4 +1,11 @@
-#page1
+#page0{
+	
+	align-items: center;
+	justify-content: center;
+	overflow-y:hidden;
+}
+
+#page1 
 {
 	height: 480px;
 	width:800px;

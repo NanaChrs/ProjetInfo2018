@@ -15,56 +15,97 @@ var bigSleeper=false;
 		var constellation = $.signalR.createConstellationConsumer("http://localhost:8088", "123456789", "Test API JS");
 		constellation.connection.start();
 		constellation.connection.stateChanged(function (change) {
-    		if (change.newState === $.signalR.connectionState.connected) {
-        		console.log("Je suis connecté");
-        		constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "DayInfo", "NameDay", "*", function (so) {
-            console.log(so);
-            $("#InfoName").text(so.Value);
-    		});
+			if (change.newState === $.signalR.connectionState.connected) {
+				console.log("Je suis connecté");
+				constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "DayInfo", "NameDay", "*", function (so) {
+			console.log(so);
+			$("#InfoName").text(so.Value);
+			});
 
-        		if(minutes==null){
-        			minutes=0;
-        		}
-        		if(heures==null){
-        			heures=0;
-        		}
+				if(minutes==null){
+					minutes=0;
+				}
+				if(heures==null){
+					heures=0;
+				}
 
-        	var HeureSonnerie= new Date (document.getElementById("time").valueAsDate);
+			var HeureSonnerie= new Date (document.getElementById("time").valueAsDate);
 			console.log(HeureSonnerie);
 			var minutes=HeureSonnerie.getMinutes();
 			var heures=HeureSonnerie.getHours();
-        	// Snippet compliant from the API 1.8.2 (Constellation-1.8.2.js) 
+			// Snippet compliant from the API 1.8.2 (Constellation-1.8.2.js) 
 
-        	constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "Brain", "Parametres_reveil", "*",function(so){
-        		console.log(so);
-        	});
+			constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "Brain", "Parametres_reveil", "*",function(so){
+				console.log(so);
+			});
 
-        	document.getElementById("valider").addEventListener("click", myFunction)
+
+		///////////////////////////////////////////////////////////////
+		//on s'abonne au groupe Reveil-->
+		constellation.server.subscribeMessages("Reveil");
+		
+		 //on consomme le state object 'IsRinging' : si le réveil sonne, on passe à la page 0
+	   constellation.client.registerStateObjectLink("DESKTOP-G88M3V4", "Brain", "Alarm", "*",function (so) {
+			var IR = so.Value;
+			console.log(so);
+			if (IR)
+				{
+					if($("#page0").get(0).style.display == "none")//si l'élement "page 0" est cachée :
+					{
+
+						$("#page0").get(0).style.display = "inherit"; //elle devient visible
+
+						$("#boutonstop").on("click", ()=>{
+						//message stopAlarm envoyé a constellation
+						constellation.server.sendMessage({ Scope: 'Package', Args: ['Brain'] }, 'StopAlarm');
+						});
+
+						$("#boutonsnooze").on("click", ()=>{
+						//message SnoozeAlarm envoyé a constellation
+						constellation.server.sendMessage({ Scope: 'Package', Args: ['Brain'] }, 'SnoozeAlarm');
+						});
+					}
+					else
+					{
+						$("#page0").get(0).style.display = "none";
+					}
+					
+					
+				};
+			});
+
+
+		///////////////////////////////////////////////////////////////
+
+			
+
+
+			document.getElementById("valider").addEventListener("click", myFunction)
 			function myFunction(){
 				Recuperation();
 				console.log(document.getElementById("modeauto").checked);
 				constellation.server.sendMessage({ Scope: 'Package', Args: ['Brain'] }, 'ChangeParametresServeur', { "IsActive":document.getElementById("activation").checked, "BigSleeper":document.getElementById("grosdormeur").checked, "ManualMode":document.getElementById("modeauto").checked, "ManualAlarmHour":document.getElementById("time").valueAsDate.getHours()-1, "ManualAlarmMinute":document.getElementById("time").valueAsDate.getMinutes()});}
 
-    		constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "DayInfo", "SunInfo", "*", function (so) {
-            console.log(so);
-            var d = new Date(so.Value.Date);
-            $("#year").text(d.getFullYear());
-            var mois=d.getMonth()+1;
-            $("#month").text((mois<10?'0':'')+mois);
-            $("#day").text((d.getDate()<10?'0':'')+d.getDate());
-    	});
+			constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "DayInfo", "SunInfo", "*", function (so) {
+			console.log(so);
+			var d = new Date(so.Value.Date);
+			$("#year").text(d.getFullYear());
+			var mois=d.getMonth()+1;
+			$("#month").text((mois<10?'0':'')+mois);
+			$("#day").text((d.getDate()<10?'0':'')+d.getDate());
+		});
 
-    		constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "GoogleCalendar", "Events", "*", function (so) {
-            	$("#AgendaNom").text(so.Value[0].Nom);
-            	$("#DateDebut").text(so.Value[0].DateDebut);
-            	$("#DateFin").text(so.Value[0].DateFin);
-            	$("#Lieu").text(so.Value[0].Lieu);
-            	var lieu=so.Value[0].Lieu;
-            	if (lieu==null){
-            		lieu="ISEN Lille";
-            	}
+			constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "GoogleCalendar", "Events", "*", function (so) {
+				$("#AgendaNom").text(so.Value[0].Nom);
+				$("#DateDebut").text(so.Value[0].DateDebut);
+				$("#DateFin").text(so.Value[0].DateFin);
+				$("#Lieu").text(so.Value[0].Lieu);
+				var lieu=so.Value[0].Lieu;
+				if (lieu==null){
+					lieu="ISEN Lille";
+				}
 
-            	constellation.server.sendMessageWithSaga(function(response){
+				constellation.server.sendMessageWithSaga(function(response){
 				lat=response.Data.latitude;
 				lng=response.Data.longitude;
 				constellation.server.sendMessageWithSaga(function(reponse){
@@ -78,35 +119,35 @@ var bigSleeper=false;
 				},{Scope:'Package',Args:['ForecastIO']},'GetWeatherForecast',lng,lat);
 
 			}, {Scope:'Package', Args:['GeocodingApi']},'CoordoneesGPS',lieu)})
-            	
-         }});
+				
+		 }});
 
 		
 
 			;
 ;
 	  Paramètres = function(){
-	  	var modeauto=document.getElementById("modeauto");
-	  	var x=document.getElementById("HideTime");
-	  	var activation=document.getElementById("activation");
-        if (x.style.display === "none") {
-        x.style.display = "block";
-    } else {
-        x.style.display = "none";
-    }
+		var modeauto=document.getElementById("modeauto");
+		var x=document.getElementById("HideTime");
+		var activation=document.getElementById("activation");
+		if (x.style.display === "none") {
+		x.style.display = "block";
+	} else {
+		x.style.display = "none";
+	}
 
-    	grosdormeur.disabled=true;
-	  	modeauto.disabled=true;
+		grosdormeur.disabled=true;
+		modeauto.disabled=true;
 	  }
 
 	  function hide() {
-    var x = document.getElementById("HideTime");
-    console.log("je ne suis pas caché è_é")
-    if (x.style.display === "none") {
-        x.style.display = "block";
-    } else {
-        x.style.display = "none";
-    }
+	var x = document.getElementById("HideTime");
+	console.log("je ne suis pas caché è_é")
+	if (x.style.display === "none") {
+		x.style.display = "block";
+	} else {
+		x.style.display = "none";
+	}
 }
 
 	function EnableAuto(val){
@@ -135,17 +176,17 @@ var bigSleeper=false;
 		console.log(HeureSonnerie.getMinutes());
 	}
 	window.onload=function() {
-	  				horloge('div_horloge');
+					horloge('div_horloge');
 				};
 	 
 				function horloge(el) {
-	  				if(typeof el=="string") { el = document.getElementById(el); }
-	  				function actualiser() {
-	    				var date = new Date();
-	    				var str = date.getHours();
-	    				str += ':'+(date.getMinutes()<10?'0':'')+date.getMinutes();
-	    				el.innerHTML = str;
-	  				}
-	  				actualiser();
-	  				setInterval(actualiser,1000);
+					if(typeof el=="string") { el = document.getElementById(el); }
+					function actualiser() {
+						var date = new Date();
+						var str = date.getHours();
+						str += ':'+(date.getMinutes()<10?'0':'')+date.getMinutes();
+						el.innerHTML = str;
+					}
+					actualiser();
+					setInterval(actualiser,1000);
 				}
