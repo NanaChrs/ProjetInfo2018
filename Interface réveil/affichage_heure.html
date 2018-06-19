@@ -18,7 +18,7 @@
 
 
 <!--////////////////////////////////////////////////////////////////-->
-    <div id="page0" style="display: none;">
+    <div id="page0" style="display:none;position: absolute;z-index: 2;background-color: white;">
         <!--page snooze-->
       <audio id="audioPlayer"  loop>
       	<source src="alarm-alarm.mp3" type="audio/mp3" />
@@ -36,14 +36,19 @@
 
 
 <div id="page1">
+	<div id="affichagePage1">
 		<div id="div_horloge">
 		</div>
-	<a href="#page2"><img src="images/next.png" id="next1"/></a>
+		<div id="horloge">
+			Prochaine alarme: <span id="heure"></span>:<span id="min"></span>
+		</div>
+	</div>
+	<img src="images/next.png" id="next1"/>
 </div>
 
 
-<div id="page2">
-	<a href="#page1"><img src="images/back.png"/></a>
+<div id="page2" style="display: none;">
+	<img src="images/back.png" id="back"/>
 	<div id="Infodujour">	
 		<div>
 		<span id="day"></span>/<span id="month"></span>/<span id=year ></span>
@@ -65,13 +70,13 @@
 	</div>
 
 </div>
-<a href="#page3"><img src="images/next.png" onclick="Paramètres()"/></a>
+<img src="images/next.png" onclick="Paramètres()"/>
 </div>
 
-<div id="page3">
-	<div><a href="#page2"><img src="images/back.png"/></a></div>
+<div id="page3" style="display: none;">
+	<div><img src="images/back.png" id="back2"/></div>
 	<div>
-	<h3>Paramètres :</h3>
+	<h3 id="param">Paramètres :</h3>
 
 
 	<form method="post" action="traitement.php" id="formulaire" class>
