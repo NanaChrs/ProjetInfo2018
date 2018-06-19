@@ -12,6 +12,7 @@
     	<script type="text/javascript" src="https://cdn.myconstellation.io/js/ngConstellation-1.8.2.min.js"></script>
     	<link rel="stylesheet" href="style.css"/> <!-- nécessite de créer un nouveau fichier CSS qui donnera les correspondances en CSS de notre code) -->
 		<link rel="stylesheet" href="semantic-UI-CSS-master/semantic.min.css"/>
+		
 	</head>
 	<body ng-controller="MyController">
 
@@ -19,7 +20,9 @@
 <!--////////////////////////////////////////////////////////////////-->
     <div id="page0" style="display: none;">
         <!--page snooze-->
-      
+      <audio id="audioPlayer"  loop>
+      	<source src="alarm-alarm.mp3" type="audio/mp3" />
+      </audio>
          <a href="#page1">
             <img src="images/stop.png" align="center" id="boutonstop" width="200" height="200" alt="imagestop"/>
             </a>
@@ -86,7 +89,7 @@
 		<label>Mode gros dormeur</label>
 	</div></br>
 
-
+<!---
 	<div class="ui form">
   <div class="inline fields">
     <label>Que voulez-vous afficher ?</label>
@@ -121,13 +124,13 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 <div><input id="valider" class="ui primary submit button" type="button"value="Valider" onclick="Recuperation()"></div>
 	</form>
 </div>
-</div>
+<script type="text/javascript" src="reveiltest.js"></script>
 
-<script type="text/javascript" src="reveil.js"></script>
+
 </body>
 </html>
 

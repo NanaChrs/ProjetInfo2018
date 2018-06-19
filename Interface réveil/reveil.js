@@ -39,7 +39,33 @@ var bigSleeper=false;
 				console.log(so);
 			});
 
+			
+			constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "GoogleCalendar", "Events", "*", function (so) {
+				$("#AgendaNom").text(so.Value[0].Nom);
+				$("#DateDebut").text(so.Value[0].DateDebut);
+				$("#DateFin").text(so.Value[0].DateFin);
+				$("#Lieu").text(so.Value[0].Lieu);
+				var lieu=so.Value[0].Lieu;
+				if (lieu==null){
+					lieu="ISEN Lille";
+				}
 
+				constellation.server.sendMessageWithSaga(function(response){
+				lat=response.Data.latitude;
+				lng=response.Data.longitude;
+				constellation.server.sendMessageWithSaga(function(reponse){
+					console.log(reponse.Data.currently);
+					var degre=Math.round(reponse.Data.currently.apparentTemperature);
+					$("#Temperature").text(degre);
+					var png=reponse.Data.currently.icon;
+					document.getElementById("icon").src="images/"+png+".png";
+					
+					
+				},{Scope:'Package',Args:['ForecastIO']},'GetWeatherForecast',lng,lat);
+
+			}, {Scope:'Package', Args:['GeocodingApi']},'CoordoneesGPS',lieu)});
+
+/*
 		///////////////////////////////////////////////////////////////
 		//on s'abonne au groupe Reveil-->
 		constellation.server.subscribeMessages("Reveil");
@@ -75,24 +101,21 @@ var bigSleeper=false;
 			});
 
 
-		///////////////////////////////////////////////////////////////
+		///////////////////////////////////////////////////////////////*/
 
 			
 
 
-			document.getElementById("valider").addEventListener("click", myFunction)
-			function myFunction(){
-				Recuperation();
-				console.log(document.getElementById("modeauto").checked);
-				constellation.server.sendMessage({ Scope: 'Package', Args: ['Brain'] }, 'ChangeParametresServeur', { "IsActive":document.getElementById("activation").checked, "BigSleeper":document.getElementById("grosdormeur").checked, "ManualMode":document.getElementById("modeauto").checked, "ManualAlarmHour":document.getElementById("time").valueAsDate.getHours()-1, "ManualAlarmMinute":document.getElementById("time").valueAsDate.getMinutes()});}
+			
 
 			constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "DayInfo", "SunInfo", "*", function (so) {
 			console.log(so);
 			var d = new Date(so.Value.Date);
 			$("#year").text(d.getFullYear());
 			var mois=d.getMonth()+1;
+			var jour=d.getDate()+1;
 			$("#month").text((mois<10?'0':'')+mois);
-			$("#day").text((d.getDate()<10?'0':'')+d.getDate());
+			$("#day").text((d.getDate()<10?'0':'')+jour);
 		});
 
 			constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "GoogleCalendar", "Events", "*", function (so) {
@@ -118,7 +141,17 @@ var bigSleeper=false;
 					
 				},{Scope:'Package',Args:['ForecastIO']},'GetWeatherForecast',lng,lat);
 
-			}, {Scope:'Package', Args:['GeocodingApi']},'CoordoneesGPS',lieu)})
+			}, {Scope:'Package', Args:['GeocodingApi']},'CoordoneesGPS',lieu)});
+
+			document.getElementById("valider").addEventListener("click", myFunction);
+			function myFunction(){
+				Recuperation();
+				console.log(document.getElementById("modeauto").checked);
+				constellation.server.sendMessage({ Scope: 'Package', Args: ['Brain'] }, 'ChangeParametresServeur', 
+					{ "IsActive":document.getElementById("activation").checked, "BigSleeper":document.getElementById("grosdormeur").checked, 
+					"ManualMode":document.getElementById("modeauto").checked, "ManualAlarmHour":document.getElementById("time").valueAsDate.getHours()-1, 
+					"ManualAlarmMinute":document.getElementById("time").valueAsDate.getMinutes()});
+			}
 				
 		 }});
 
