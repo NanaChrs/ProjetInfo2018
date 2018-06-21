@@ -4,15 +4,23 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<title> affichage réveil</title>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.2.2.min.js"></script>
+<script type="text/javascript" src="https://cdn.myconstellation.io/js/Constellation-1.8.2.min.js"></script>
+<!--
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 		<script type="text/javascript" src="semantic-UI-CSS-master/semantic.min.js"></script>
     	<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.2.2.min.js"></script>
-    	<script type="text/javascript" src="https://cdn.myconstellation.io/js/Constellation-1.8.2.min.js"></script>
+    	<script type="text/javascript" src="https://cdn.myconstellation.io/js/Constellation-1.8.2.min.js"></script>-->
     	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
     	<script type="text/javascript" src="https://cdn.myconstellation.io/js/ngConstellation-1.8.2.min.js"></script>
     	<link rel="stylesheet" href="style.css"/> <!-- nécessite de créer un nouveau fichier CSS qui donnera les correspondances en CSS de notre code) -->
 		<link rel="stylesheet" href="semantic-UI-CSS-master/semantic.min.css"/>
+<<<<<<< Updated upstream
 		
+=======
+		<script type="text/javascript" src="reveiltest.js"></script>
+>>>>>>> Stashed changes
 	</head>
 	<body ng-controller="MyController">
 
@@ -20,9 +28,13 @@
 <!--////////////////////////////////////////////////////////////////-->
     <div id="page0" style="display:none;position: absolute;z-index: 2;background-color: white;">
         <!--page snooze-->
+<<<<<<< Updated upstream
       <audio id="audioPlayer"  loop>
       	<source src="alarm-alarm.mp3" type="audio/mp3" />
       </audio>
+=======
+      	<audio src="alarm-alarm.mp3" id="audioPlayer"></audio>
+>>>>>>> Stashed changes
          <a href="#page1">
             <img src="images/stop.png" align="center" id="boutonstop" width="200" height="200" alt="imagestop"/>
             </a>
@@ -84,15 +96,41 @@
 		<input type="checkbox" name="activation" id="activation" onclick="EnableAuto(this)">
 		<label>Activer le réveil</label>
 	</div></br>
+
 	<div class="ui toggle checkbox">
 		<input type="checkbox" name="modeauto" id="modeauto" onClick="hide()">
 		<label>Activer le mode manuel</label>
 	</div></br>
+
 	<div id="HideTime"><label> <strong>Veuillez entrer l'heure prévue du prochain réveil: </strong></label> <input type="time" id="time" value="07:00"/> </div>
 	<div class="ui toggle checkbox">
 		<input type="checkbox" name="bigSleeper" id="grosdormeur">
 		<label>Mode gros dormeur</label>
 	</div></br>
+	
+	<!--tous les boutons d'un même groupe doivent avoir le même nom-->
+	<h4>Choix de la sonnerie :</h4>
+<form method="post" action="traitement.php">
+   <p>
+       <label for="pays">Sur quel son voulez-vous vous réveiller ?</label><br/>
+
+       <select name="song" id="chanson">
+           <option value="chanson1">Océan</option>
+           <option value="chanson2">Petits chats</option>
+           <option value="chanson3">Matins difficils</option>
+           <option value="chanson4">sonnerie samsung</option>
+           <option value="chanson5">chanson 5</option>
+           <option value="chanson6">chanson 6</option>
+           <option value="chanson7">chanson 7</option>
+           <option value="chanson8">chanson 8</option>
+       </select>
+   </p>
+</form>
+
+
+
+
+
 
 <!---
 	<div class="ui form">
@@ -138,6 +176,3 @@
 
 </body>
 </html>
-
-
-
