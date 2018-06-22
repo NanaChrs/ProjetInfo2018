@@ -92,35 +92,47 @@
 	</div></br>
 	<div class="ui form" id="jours" style="display: none">
 	  <div class="inline fields">
-	    <label>Que voulez-vous afficher ?</label>
+	    <label>Le réveil sonnera le:</label>
 	    <div class="field">
 	      <div class="ui checkbox">
-	        <input type="checkbox" name="choix_meteo" id="choix_meteo">
-	        <label>Météo</label>
+	        <input type="checkbox" name="lundi" id="lundi" value=0>
+	        <label>Lundi</label>
 	      </div>
 	    </div>
 	    <div class="field">
 	      <div class="ui checkbox">
-	        <input type="checkbox" name="choix_agenda" id="choix_agenda">
-	        <label>Agenda</label>
+	        <input type="checkbox" name="mardi" id="mardi" value=1>
+	        <label>Mardi</label>
 	      </div>
 	    </div>
 	    <div class="field">
 	      <div class="ui checkbox">
-	        <input type="checkbox" name="choix_fete" id="choix_fete">
-	        <label>Fête du jour</label>
+	        <input type="checkbox" name="mercredi" id="mercredi" value=2>
+	        <label>Mercredi</label>
 	      </div>
 	    </div>
 	    <div class="field">
 	      <div class="ui checkbox">
-	        <input type="checkbox" name="choix_date" id="choix_date">
-	        <label>Date du jour</label>
+	        <input type="checkbox" name="jeudi" id="jeudi" value=3>
+	        <label>Jeudi</label>
 	      </div>
 	    </div>
 	    <div class="field">
 	      <div class="ui checkbox">
-	        <input type="checkbox" name="choix_traffic" id="choix_traffic">
-	        <label>Info traffic</label>
+	        <input type="checkbox" name="vendredi" id="vendredi" value=4>
+	        <label>Vendredi</label>
+	      </div>
+	    </div>
+	    <div class="field">
+	      <div class="ui checkbox">
+	        <input type="checkbox" name="samedi" id="samedi" value=5>
+	        <label>Samedi</label>
+	      </div>
+	    </div>
+	    <div class="field">
+	      <div class="ui checkbox">
+	        <input type="checkbox" name="dimanche" id="dimanche" value=6>
+	        <label>Dimanche</label>
 	      </div>
 	    </div>
 	  </div>
@@ -151,7 +163,7 @@
           
 </select>
 
-<div><input id="valider" class="ui primary submit button" type="button"value="Valider" onclick="Recuperation()"></div>
+<div><input id="valider" class="ui primary submit button" type="button"value="Valider"></div>
 	</form>
 </div>
 </div>

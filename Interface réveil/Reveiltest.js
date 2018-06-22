@@ -7,6 +7,7 @@ var bigSleeper=false;
     var modeauto=true;
     var activation=false;
     var HeureSonnerie;
+    var Days=[];
      //concernant le changement de source des musiques
     var src_musique;
     var musique=document.querySelector("#audioPlayer");
@@ -21,9 +22,8 @@ var bigSleeper=false;
 
 
     function myFunction(){
-        Recuperation();
         console.log(document.getElementById("modeauto").checked);
-        constellation.server.sendMessage({ Scope: 'Package', Args: ['Brain'] }, 'ChangeParametresServeur', { "IsActive":document.getElementById("activation").checked, "BigSleeper":document.getElementById("grosdormeur").checked, "ManualMode":document.getElementById("modeauto").checked, "ManualAlarmHour":document.getElementById("time").valueAsDate.getHours()-1, "ManualAlarmMinute":document.getElementById("time").valueAsDate.getMinutes()});
+        constellation.server.sendMessage({ Scope: 'Package', Args: ['Brain'] }, 'ChangeParametresServeur', { "IsActive":document.getElementById("activation").checked, "BigSleeper":document.getElementById("grosdormeur").checked, "Days":Days.toString(), "ManualMode":document.getElementById("modeauto").checked, "ManualAlarmHour":document.getElementById("time").valueAsDate.getHours()-1, "ManualAlarmMinute":document.getElementById("time").valueAsDate.getMinutes()});
          ///////////////on change la source de la musique lorsqu'elle est sélectionnée dans les paramètres//////////
          console.log(src_musique);//c'est la source de la musique choisir précédement par l'utilisateur
          musique.setAttribute("src", src_musique);
@@ -78,8 +78,10 @@ var bigSleeper=false;
            if(so.Value.AlarmHour<10 & so.Value.AlarmHour>0){so.Value.AlarmHour='0'+so.Value.AlarmHour};
             if(so.Value.AlarmMinutes<10 & so.Value.AlarmMinutes>0){so.Value.AlarmMinutes='0'+so.Value.AlarmMinutes};
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        var min=so.Value.AlarmMinutes;
         $("#heure").text(so.Value.AlarmHour);
-        $("#min").text(so.Value.AlarmMinutes);
+        $("#min").text((min<10?'0':'')+min);
         console.log("is ringing est detecte")
         console.log( so);
         if (IR) {
@@ -173,25 +175,41 @@ $("#modeauto").change(function(){
     $("#HideTime").css("display","none");
   }
 });
- 
-  function Recuperation(){
+
+$("#valider").click(function(){
     bigSleeper=document.getElementById("grosdormeur").checked;
     modeauto=document.getElementById("modeauto").checked;
-    /*choix_meteo=document.getElementById("choix_meteo").checked;
-    choix_traffic=document.getElementById("choix_traffic").checked;
-    choix_agenda=document.getElementById("choix_agenda").checked;
-    choix_fete=document.getElementById("choix_fete").checked;
-    choix_date=document.getElementById("choix_date").checked;*/
     activation=document.getElementById("activation").checked;
     HeureSonnerie= new Date (document.getElementById("time").value);
-      src_musique=document.getElementById("audiofiles").value;
-    console.log(HeureSonnerie.getMinutes());
+    src_musique=document.getElementById("audiofiles").value;
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     $("#page3").hide();
     $("#page1").show();
+    Days=[];
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////      
-
-  }
+    if ($("#lundi").is(":checked")){
+      console.log("hellow");
+      Days.push(1);
+    }
+    if ($("#mardi").is(":checked")){
+      Days.push(2);
+    }
+    if ($("#mercredi").is(":checked")){
+      Days.push(3);
+    }
+    if ($("#jeudi").is(":checked")){
+      Days.push(4);
+    }
+    if ($("#vendredi").is(":checked")){
+      Days.push(5);
+    }
+    if ($("#samedi").is(":checked")){
+      Days.push(6);
+    }
+    if ($("#dimanche").is(":checked")){
+      Days.push(0);
+    }
+  });
 
 
   window.onload=function() {
