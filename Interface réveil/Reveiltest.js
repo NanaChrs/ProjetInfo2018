@@ -126,8 +126,13 @@ Paramètres = function(){
   var activation=document.getElementById("activation");
   if (x.style.display === "none") {
     x.style.display = "block";
+    jours.style.display="block";
+    activation.style.display="block";
+
   } else {
     x.style.display = "none";
+    jours.style.display="none";
+    activation.style.display="none";
   }
   grosdormeur.disabled=true;
   modeauto.disabled=true;
@@ -136,8 +141,9 @@ Paramètres = function(){
 function hide() {
   var x = document.getElementById("HideTime");
   console.log("je ne suis pas caché è_é")
-  if (x.style.display === "none") {
+  if (x.style.display == "none") {
     x.style.display = "block";
+
   } else {
     x.style.display = "none";
   }
