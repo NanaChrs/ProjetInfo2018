@@ -4,23 +4,15 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<title> affichage réveil</title>
-		<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.2.2.min.js"></script>
-<script type="text/javascript" src="https://cdn.myconstellation.io/js/Constellation-1.8.2.min.js"></script>
-<!--
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 		<script type="text/javascript" src="semantic-UI-CSS-master/semantic.min.js"></script>
     	<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.2.2.min.js"></script>
-    	<script type="text/javascript" src="https://cdn.myconstellation.io/js/Constellation-1.8.2.min.js"></script>-->
+    	<script type="text/javascript" src="https://cdn.myconstellation.io/js/Constellation-1.8.2.min.js"></script>
     	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
     	<script type="text/javascript" src="https://cdn.myconstellation.io/js/ngConstellation-1.8.2.min.js"></script>
     	<link rel="stylesheet" href="style.css"/> <!-- nécessite de créer un nouveau fichier CSS qui donnera les correspondances en CSS de notre code) -->
 		<link rel="stylesheet" href="semantic-UI-CSS-master/semantic.min.css"/>
-<<<<<<< Updated upstream
 		
-=======
-		<script type="text/javascript" src="reveiltest.js"></script>
->>>>>>> Stashed changes
 	</head>
 	<body ng-controller="MyController">
 
@@ -28,13 +20,9 @@
 <!--////////////////////////////////////////////////////////////////-->
     <div id="page0" style="display:none;position: absolute;z-index: 2;background-color: white;">
         <!--page snooze-->
-<<<<<<< Updated upstream
       <audio id="audioPlayer"  loop>
-      	<source src="alarm-alarm.mp3" type="audio/mp3" />
+      	<source src="alarm1.mp3" type="audio/mp3" />
       </audio>
-=======
-      	<audio src="alarm-alarm.mp3" id="audioPlayer"></audio>
->>>>>>> Stashed changes
          <a href="#page1">
             <img src="images/stop.png" align="center" id="boutonstop" width="200" height="200" alt="imagestop"/>
             </a>
@@ -96,66 +84,57 @@
 		<input type="checkbox" name="activation" id="activation" onclick="EnableAuto(this)">
 		<label>Activer le réveil</label>
 	</div></br>
-
 	<div class="ui toggle checkbox">
 		<input type="checkbox" name="modeauto" id="modeauto" onClick="hide()">
 		<label>Activer le mode manuel</label>
 	</div></br>
-
 	<div id="HideTime"><label> <strong>Veuillez entrer l'heure prévue du prochain réveil: </strong></label> <input type="time" id="time" value="07:00"/> </div>
-	<div class="ui form" >
-	  <div class="inline fields" id="jours">
-	    <label>Le réveil sonnera le:</label>
-	    <div class="field">
-	      <div class="ui checkbox">
-	        <input type="checkbox" name="lundi" id="lundi">
-	        <label>Lundi</label>
-	      </div>
-	    </div>
-	    <div class="field">
-	      <div class="ui checkbox">
-	        <input type="checkbox" name="mardi" id="mardi">
-	        <label>Mardi</label>
-	      </div>
-	    </div>
-	    <div class="field">
-	      <div class="ui checkbox">
-	        <input type="checkbox" name="mercredi" id="mercredi">
-	        <label>Mercredi</label>
-	      </div>
-	    </div>
-	    <div class="field">
-	      <div class="ui checkbox">
-	        <input type="checkbox" name="jeudi" id="jeudi">
-	        <label>Jeudi</label>
-	      </div>
-	    </div>
-	    <div class="field">
-	      <div class="ui checkbox">
-	        <input type="checkbox" name="vendredi" id="vendredi">
-	        <label>Vendredi</label>
-	      </div>
-	    </div>
-	    <div class="field">
-	      <div class="ui checkbox">
-	        <input type="checkbox" name="samedi" id="samedi">
-	        <label>Samedi</label>
-	      </div>
-	    </div>
-	    <div class="field">
-	      <div class="ui checkbox">
-	        <input type="checkbox" name="dimanche" id="dimanche">
-	        <label>dimanche</label>
-	      </div>
-	    </div>
-  </div>
-  </div> 
 	<div class="ui toggle checkbox">
 		<input type="checkbox" name="bigSleeper" id="grosdormeur">
 		<label>Mode gros dormeur</label>
 	</div></br>
-	
+ 
+  <select class="ui dropdown"  id="audiofiles">
+           <option value="alarm1.mp3">Océan</option> 
+          
+</select>
 
+<!---
+	<div class="ui form">
+  <div class="inline fields">
+    <label>Que voulez-vous afficher ?</label>
+    <div class="field">
+      <div class="ui checkbox">
+        <input type="checkbox" name="choix_meteo" id="choix_meteo">
+        <label>Météo</label>
+      </div>
+    </div>
+    <div class="field">
+      <div class="ui checkbox">
+        <input type="checkbox" name="choix_agenda" id="choix_agenda">
+        <label>Agenda</label>
+      </div>
+    </div>
+    <div class="field">
+      <div class="ui checkbox">
+        <input type="checkbox" name="choix_fete" id="choix_fete">
+        <label>Fête du jour</label>
+      </div>
+    </div>
+    <div class="field">
+      <div class="ui checkbox">
+        <input type="checkbox" name="choix_date" id="choix_date">
+        <label>Date du jour</label>
+      </div>
+    </div>
+    <div class="field">
+      <div class="ui checkbox">
+        <input type="checkbox" name="choix_traffic" id="choix_traffic">
+        <label>Info traffic</label>
+      </div>
+    </div>
+  </div>
+</div> -->
 <div><input id="valider" class="ui primary submit button" type="button"value="Valider" onclick="Recuperation()"></div>
 	</form>
 </div>
@@ -164,3 +143,6 @@
 
 </body>
 </html>
+
+
+

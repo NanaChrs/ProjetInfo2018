@@ -7,7 +7,10 @@ var bigSleeper=false;
     var modeauto=true;
     var activation=false;
     var HeureSonnerie;
-    
+     //concernant le changement de source des musiques
+    var src_musique;
+    var musique=document.querySelector("#audioPlayer");
+    //concernant le lancement de la sonnerie :
     var player=document.querySelector("#audioPlayer");
     player.load();
 
@@ -21,6 +24,10 @@ var bigSleeper=false;
         Recuperation();
         console.log(document.getElementById("modeauto").checked);
         constellation.server.sendMessage({ Scope: 'Package', Args: ['Brain'] }, 'ChangeParametresServeur', { "IsActive":document.getElementById("activation").checked, "BigSleeper":document.getElementById("grosdormeur").checked, "ManualMode":document.getElementById("modeauto").checked, "ManualAlarmHour":document.getElementById("time").valueAsDate.getHours()-1, "ManualAlarmMinute":document.getElementById("time").valueAsDate.getMinutes()});
+         ///////////////on change la source de la musique lorsqu'elle est sélectionnée dans les paramètres//////////
+         console.log(src_musique);//c'est la source de la musique choisir précédement par l'utilisateur
+         musique.setAttribute("src", src_musique);
+        console.log(musique.src);
       }
 
 
@@ -28,7 +35,7 @@ var bigSleeper=false;
     constellation.connection.stateChanged(function (change) {
       if (change.newState === $.signalR.connectionState.connected) {
         console.log("Je suis connecté");
-        constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "DayInfo", "NameDay", "*", function (so) {
+        constellation.client.registerStateObjectLink("DESKTOP-G88M3V4", "DayInfo", "NameDay", "*", function (so) {
         console.log(so);
         $("#InfoName").text(so.Value);
       });
@@ -46,13 +53,13 @@ var bigSleeper=false;
       var heures=HeureSonnerie.getHours();
           // Snippet compliant from the API 1.8.2 (Constellation-1.8.2.js) 
  
-      constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "Brain", "Parametres_reveil", "*",function(so){
+      constellation.client.registerStateObjectLink("DESKTOP-G88M3V4", "Brain", "Parametres_reveil", "*",function(so){
         console.log(so);
       });
  
       document.getElementById("valider").addEventListener("click", myFunction)
       
-      constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "DayInfo", "SunInfo", "*", function (so) {
+      constellation.client.registerStateObjectLink("DESKTOP-G88M3V4", "DayInfo", "SunInfo", "*", function (so) {
         console.log(so);
         var d = new Date(so.Value.Date);
         $("#year").text(d.getFullYear());
@@ -65,8 +72,12 @@ var bigSleeper=false;
       constellation.server.subscribeMessages("Reveil");
   
      //on consomme le state object 'IsRinging' : si le réveil sonne, on passe à la page 0
-      constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "Brain", "Alarm", "*",function (so) {
+      constellation.client.registerStateObjectLink("DESKTOP-G88M3V4", "Brain", "Alarm", "*",function (so) {
         var IR = so.Value.IsRinging;
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+           if(so.Value.AlarmHour<10 & so.Value.AlarmHour>0){so.Value.AlarmHour='0'+so.Value.AlarmHour};
+            if(so.Value.AlarmMinutes<10 & so.Value.AlarmMinutes>0){so.Value.AlarmMinutes='0'+so.Value.AlarmMinutes};
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         $("#heure").text(so.Value.AlarmHour);
         $("#min").text(so.Value.AlarmMinutes);
         console.log("is ringing est detecte")
@@ -78,7 +89,7 @@ var bigSleeper=false;
         }
       });
 
-      constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "GoogleCalendar", "Events", "*", function (so) {
+      constellation.client.registerStateObjectLink("DESKTOP-G88M3V4", "GoogleCalendar", "Events", "*", function (so) {
         console.log(so);
         $("#AgendaNom").text(so.Value[0].Nom);
         $("#DateDebut").text(so.Value[0].DateDebut);
@@ -108,21 +119,17 @@ var bigSleeper=false;
 Paramètres = function(){
   $("#page2").hide();
   $("#page3").show();
+
+  
   var modeauto=document.getElementById("modeauto");
   var x=document.getElementById("HideTime");
   var activation=document.getElementById("activation");
-  var jours=document.getElementById("jours");
-  if (x.style.display == "none") {
+  if (x.style.display === "none") {
     x.style.display = "block";
-
   } else {
     x.style.display = "none";
   }
-
-  activation.checked=false;
   grosdormeur.disabled=true;
-  grosdormeur.checked=false;
-  modeauto.checked=false;
   modeauto.disabled=true;
 }
  
@@ -138,12 +145,15 @@ function hide() {
 
 function EnableAuto(val){
     var modeauto=document.getElementById("modeauto");
- 
+
+
     if (val.checked==true){
       modeauto.disabled=false;
       grosdormeur.disabled=false;
+  
     }
     else{
+
       modeauto.disabled=true;
       grosdormeur.disabled=true;
     }
@@ -159,7 +169,13 @@ function EnableAuto(val){
     choix_date=document.getElementById("choix_date").checked;*/
     activation=document.getElementById("activation").checked;
     HeureSonnerie= new Date (document.getElementById("time").value);
+      src_musique=document.getElementById("audiofiles").value;
     console.log(HeureSonnerie.getMinutes());
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    $("#page3").hide();
+    $("#page1").show();
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////      
+
   }
 
 
