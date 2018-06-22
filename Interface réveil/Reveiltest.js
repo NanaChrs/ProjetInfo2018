@@ -35,7 +35,7 @@ var bigSleeper=false;
     constellation.connection.stateChanged(function (change) {
       if (change.newState === $.signalR.connectionState.connected) {
         console.log("Je suis connecté");
-        constellation.client.registerStateObjectLink("DESKTOP-G88M3V4", "DayInfo", "NameDay", "*", function (so) {
+        constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "DayInfo", "NameDay", "*", function (so) {
         console.log(so);
         $("#InfoName").text(so.Value);
       });
@@ -53,13 +53,13 @@ var bigSleeper=false;
       var heures=HeureSonnerie.getHours();
           // Snippet compliant from the API 1.8.2 (Constellation-1.8.2.js) 
  
-      constellation.client.registerStateObjectLink("DESKTOP-G88M3V4", "Brain", "Parametres_reveil", "*",function(so){
+      constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "Brain", "Parametres_reveil", "*",function(so){
         console.log(so);
       });
  
       document.getElementById("valider").addEventListener("click", myFunction)
       
-      constellation.client.registerStateObjectLink("DESKTOP-G88M3V4", "DayInfo", "SunInfo", "*", function (so) {
+      constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "DayInfo", "SunInfo", "*", function (so) {
         console.log(so);
         var d = new Date(so.Value.Date);
         $("#year").text(d.getFullYear());
@@ -72,7 +72,7 @@ var bigSleeper=false;
       constellation.server.subscribeMessages("Reveil");
   
      //on consomme le state object 'IsRinging' : si le réveil sonne, on passe à la page 0
-      constellation.client.registerStateObjectLink("DESKTOP-G88M3V4", "Brain", "Alarm", "*",function (so) {
+      constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "Brain", "Alarm", "*",function (so) {
         var IR = so.Value.IsRinging;
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
            if(so.Value.AlarmHour<10 & so.Value.AlarmHour>0){so.Value.AlarmHour='0'+so.Value.AlarmHour};
@@ -89,7 +89,7 @@ var bigSleeper=false;
         }
       });
 
-      constellation.client.registerStateObjectLink("DESKTOP-G88M3V4", "GoogleCalendar", "Events", "*", function (so) {
+      constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "GoogleCalendar", "Events", "*", function (so) {
         console.log(so);
         $("#AgendaNom").text(so.Value[0].Nom);
         $("#DateDebut").text(so.Value[0].DateDebut);
@@ -120,50 +120,59 @@ Paramètres = function(){
   $("#page2").hide();
   $("#page3").show();
 
-  
-  var modeauto=document.getElementById("modeauto");
-  var x=document.getElementById("HideTime");
-  var activation=document.getElementById("activation");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-    jours.style.display="block";
-    activation.style.display="block";
+  if($("#activation").is(":checked")){
+    console.log("bjr");
+    $("#hidemodeauto").css("display","block");
+    $("#audiofiles").css("display","block");
+    $("#hideGD").css("display","block");
 
-  } else {
-    x.style.display = "none";
-    jours.style.display="none";
-    activation.style.display="none";
-  }
-  grosdormeur.disabled=true;
-  modeauto.disabled=true;
-}
- 
-function hide() {
-  var x = document.getElementById("HideTime");
-  console.log("je ne suis pas caché è_é")
-  if (x.style.display == "none") {
-    x.style.display = "block";
-
-  } else {
-    x.style.display = "none";
-  }
-}
-
-function EnableAuto(val){
-    var modeauto=document.getElementById("modeauto");
-
-
-    if (val.checked==true){
-      modeauto.disabled=false;
-      grosdormeur.disabled=false;
-  
+    if($("#modeauto").is(":checked")){
+      $("#HideTime").css("display","block");
+      $("#jours").css("display","block");
+      
     }
     else{
-
-      modeauto.disabled=true;
-      grosdormeur.disabled=true;
+      $("#HideTime").css("display","none");
+      $("#jours").css("display","none");
     }
   }
+  else{
+    $("#hidemodeauto").css("display","none");
+    $("#audiofiles").css("display","none");
+    $("#hideGD").css("display","none");
+    $("#HideTime").css("display","none");
+    $("#jours").css("display","none");
+  }
+  
+}
+ 
+$("#activation").change(function() {
+    if(this.checked) {
+      $("#hidemodeauto").css("display","block");
+      $("#audiofiles").css("display","block");
+      $("#hideGD").css("display","block");
+      modeauto.checked=false;
+    }
+    else{
+      $("#hidemodeauto").css("display","none");
+      $("#audiofiles").css("display","none");
+      $("#hideGD").css("display","none");
+      $("#HideTime").css("display","none");
+      $("#jours").css("display","none");
+      modeauto.checked=false;
+    }
+});
+
+$("#modeauto").change(function(){
+  if(this.checked){
+    $("#jours").css("display","block");
+    $("#HideTime").css("display","block");
+  }
+  else{
+    $("#jours").css("display","none");
+    $("#HideTime").css("display","none");
+  }
+});
  
   function Recuperation(){
     bigSleeper=document.getElementById("grosdormeur").checked;

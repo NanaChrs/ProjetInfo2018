@@ -84,62 +84,77 @@
 
 	<form method="post" action="traitement.php" id="formulaire" class>
 	<div class="ui toggle checkbox">
-		<input type="checkbox" name="activation" id="activation" onclick="EnableAuto(this)">
+		<input type="checkbox" name="activation" id="activation">
 		<label>Activer le réveil</label>
 	</div></br>
-	<div class="ui toggle checkbox">
-		<input type="checkbox" name="modeauto" id="modeauto" onClick="hide()">
+	<div class="ui toggle checkbox" style="display: none" id="hidemodeauto">
+		<input type="checkbox" name="modeauto" id="modeauto">
 		<label>Activer le mode manuel</label>
 	</div></br>
-	<div id="HideTime"><label> <strong>Veuillez entrer l'heure prévue du prochain réveil: </strong></label> <input type="time" id="time" value="07:00"/> </div>
-	<div class="ui toggle checkbox">
+	<div class="ui form" id="jours" style="display: none">
+	  <div class="inline fields">
+	    <label>Que voulez-vous afficher ?</label>
+	    <div class="field">
+	      <div class="ui checkbox">
+	        <input type="checkbox" name="choix_meteo" id="choix_meteo">
+	        <label>Météo</label>
+	      </div>
+	    </div>
+	    <div class="field">
+	      <div class="ui checkbox">
+	        <input type="checkbox" name="choix_agenda" id="choix_agenda">
+	        <label>Agenda</label>
+	      </div>
+	    </div>
+	    <div class="field">
+	      <div class="ui checkbox">
+	        <input type="checkbox" name="choix_fete" id="choix_fete">
+	        <label>Fête du jour</label>
+	      </div>
+	    </div>
+	    <div class="field">
+	      <div class="ui checkbox">
+	        <input type="checkbox" name="choix_date" id="choix_date">
+	        <label>Date du jour</label>
+	      </div>
+	    </div>
+	    <div class="field">
+	      <div class="ui checkbox">
+	        <input type="checkbox" name="choix_traffic" id="choix_traffic">
+	        <label>Info traffic</label>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<div id="HideTime" style="display: none"><label> <strong>Veuillez entrer l'heure prévue du prochain réveil: </strong></label> <input type="time" id="time" value="07:00"/> </div>
+	<div class="ui toggle checkbox" style="display: none" id="hideGD">
 		<input type="checkbox" name="bigSleeper" id="grosdormeur">
 		<label>Mode gros dormeur</label>
 	</div></br>
  
   <select class="ui dropdown"  id="audiofiles">
            <option value="alarm1.mp3">Océan</option> 
+           <option value="alarm2.mp3">Chats</option> 
+           <option value="alarm3.mp3">Océan</option> 
+           <option value="alarm4.mp3">Bangarang</option> 
+           <option value="alarm5.mp3">Conga</option> 
+           <option value="alarm6.mp3">Diggy Diggy Hole</option> 
+           <option value="alarm7.mp3">Le château dans le ciel</option> 
+           <option value="alarm8.mp3">Le château ambulant</option> 
+           <option value="alarm9.mp3">Path Of The Wind, Totoro</option> 
+           <option value="alarm10.mp3">Musique Samsung 1</option> 
+           <option value="alarm11.mp3">Musique Samsung 2</option> 
+           <option value="alarm12.mp3">Musique Samsung 3</option> 
+           <option value="alarm13.mp3">Musique Samsung 4</option> 
+           <option value="alarm14.mp3">Musique Samsung 5</option> 
+           <option value="alarm15.mp3">Musique Samsung 6</option> 
+           <option value="alarm16.mp3">Musique Samsung 7 : matin très très difficile</option> 
           
 </select>
 
-<!---
-	<div class="ui form">
-  <div class="inline fields">
-    <label>Que voulez-vous afficher ?</label>
-    <div class="field">
-      <div class="ui checkbox">
-        <input type="checkbox" name="choix_meteo" id="choix_meteo">
-        <label>Météo</label>
-      </div>
-    </div>
-    <div class="field">
-      <div class="ui checkbox">
-        <input type="checkbox" name="choix_agenda" id="choix_agenda">
-        <label>Agenda</label>
-      </div>
-    </div>
-    <div class="field">
-      <div class="ui checkbox">
-        <input type="checkbox" name="choix_fete" id="choix_fete">
-        <label>Fête du jour</label>
-      </div>
-    </div>
-    <div class="field">
-      <div class="ui checkbox">
-        <input type="checkbox" name="choix_date" id="choix_date">
-        <label>Date du jour</label>
-      </div>
-    </div>
-    <div class="field">
-      <div class="ui checkbox">
-        <input type="checkbox" name="choix_traffic" id="choix_traffic">
-        <label>Info traffic</label>
-      </div>
-    </div>
-  </div>
-</div> -->
 <div><input id="valider" class="ui primary submit button" type="button"value="Valider" onclick="Recuperation()"></div>
 	</form>
+</div>
 </div>
 <script type="text/javascript" src="reveiltest.js"></script>
 
