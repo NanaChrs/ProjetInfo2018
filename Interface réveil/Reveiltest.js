@@ -111,12 +111,18 @@ Paramètres = function(){
   var modeauto=document.getElementById("modeauto");
   var x=document.getElementById("HideTime");
   var activation=document.getElementById("activation");
-  if (x.style.display === "none") {
+  var jours=document.getElementById("jours");
+  if (x.style.display == "none") {
     x.style.display = "block";
+
   } else {
     x.style.display = "none";
   }
+
+  activation.checked=false;
   grosdormeur.disabled=true;
+  grosdormeur.checked=false;
+  modeauto.checked=false;
   modeauto.disabled=true;
 }
  

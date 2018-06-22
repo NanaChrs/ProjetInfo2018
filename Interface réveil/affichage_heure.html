@@ -103,71 +103,59 @@
 	</div></br>
 
 	<div id="HideTime"><label> <strong>Veuillez entrer l'heure prévue du prochain réveil: </strong></label> <input type="time" id="time" value="07:00"/> </div>
+	<div class="ui form" >
+	  <div class="inline fields" id="jours">
+	    <label>Le réveil sonnera le:</label>
+	    <div class="field">
+	      <div class="ui checkbox">
+	        <input type="checkbox" name="lundi" id="lundi">
+	        <label>Lundi</label>
+	      </div>
+	    </div>
+	    <div class="field">
+	      <div class="ui checkbox">
+	        <input type="checkbox" name="mardi" id="mardi">
+	        <label>Mardi</label>
+	      </div>
+	    </div>
+	    <div class="field">
+	      <div class="ui checkbox">
+	        <input type="checkbox" name="mercredi" id="mercredi">
+	        <label>Mercredi</label>
+	      </div>
+	    </div>
+	    <div class="field">
+	      <div class="ui checkbox">
+	        <input type="checkbox" name="jeudi" id="jeudi">
+	        <label>Jeudi</label>
+	      </div>
+	    </div>
+	    <div class="field">
+	      <div class="ui checkbox">
+	        <input type="checkbox" name="vendredi" id="vendredi">
+	        <label>Vendredi</label>
+	      </div>
+	    </div>
+	    <div class="field">
+	      <div class="ui checkbox">
+	        <input type="checkbox" name="samedi" id="samedi">
+	        <label>Samedi</label>
+	      </div>
+	    </div>
+	    <div class="field">
+	      <div class="ui checkbox">
+	        <input type="checkbox" name="dimanche" id="dimanche">
+	        <label>dimanche</label>
+	      </div>
+	    </div>
+  </div>
+  </div> 
 	<div class="ui toggle checkbox">
 		<input type="checkbox" name="bigSleeper" id="grosdormeur">
 		<label>Mode gros dormeur</label>
 	</div></br>
 	
-	<!--tous les boutons d'un même groupe doivent avoir le même nom-->
-	<h4>Choix de la sonnerie :</h4>
-<form method="post" action="traitement.php">
-   <p>
-       <label for="pays">Sur quel son voulez-vous vous réveiller ?</label><br/>
 
-       <select name="song" id="chanson">
-           <option value="chanson1">Océan</option>
-           <option value="chanson2">Petits chats</option>
-           <option value="chanson3">Matins difficils</option>
-           <option value="chanson4">sonnerie samsung</option>
-           <option value="chanson5">chanson 5</option>
-           <option value="chanson6">chanson 6</option>
-           <option value="chanson7">chanson 7</option>
-           <option value="chanson8">chanson 8</option>
-       </select>
-   </p>
-</form>
-
-
-
-
-
-
-<!---
-	<div class="ui form">
-  <div class="inline fields">
-    <label>Que voulez-vous afficher ?</label>
-    <div class="field">
-      <div class="ui checkbox">
-        <input type="checkbox" name="choix_meteo" id="choix_meteo">
-        <label>Météo</label>
-      </div>
-    </div>
-    <div class="field">
-      <div class="ui checkbox">
-        <input type="checkbox" name="choix_agenda" id="choix_agenda">
-        <label>Agenda</label>
-      </div>
-    </div>
-    <div class="field">
-      <div class="ui checkbox">
-        <input type="checkbox" name="choix_fete" id="choix_fete">
-        <label>Fête du jour</label>
-      </div>
-    </div>
-    <div class="field">
-      <div class="ui checkbox">
-        <input type="checkbox" name="choix_date" id="choix_date">
-        <label>Date du jour</label>
-      </div>
-    </div>
-    <div class="field">
-      <div class="ui checkbox">
-        <input type="checkbox" name="choix_traffic" id="choix_traffic">
-        <label>Info traffic</label>
-      </div>
-    </div>
-  </div>
-</div> -->
 <div><input id="valider" class="ui primary submit button" type="button"value="Valider" onclick="Recuperation()"></div>
 	</form>
 </div>
