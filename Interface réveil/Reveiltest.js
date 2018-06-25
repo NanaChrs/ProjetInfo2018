@@ -8,6 +8,9 @@ var bigSleeper=false;
     var activation=false;
     var HeureSonnerie;
     var Days=[];
+    var jouralarme;
+    var Heure;
+    var Minutes;
      //concernant le changement de source des musiques
     var src_musique;
     var musique=document.querySelector("#audioPlayer");
@@ -30,6 +33,63 @@ var bigSleeper=false;
         console.log(musique.src);
       }
 
+    function prochainjour(){
+      var jouractuel= new Date;
+      var i=0;
+      var boucle=true;
+      console.log(Days.length);
+      if (Days.length != 0){
+        if (Days.length==1){
+          jouralarme=Days[0];
+          boucle=false;
+        }
+        else{
+        while(boucle && i<Days.length){
+          console.log("Dans la boucle");
+          console.log(Days[i]);
+          console.log(jouractuel.getHours()<=Heure);
+          if (Days[i]==jouractuel.getDay()){
+            if (jouractuel.getHours()<Heure){
+              jouralarme=Days[i];
+              boucle=false;
+            }
+            else if(jouractuel.getHours()==Heure && jouractuel.getMinutes()<Minutes){
+              jouralarme=Days[i];
+              boucle=false;
+            }
+
+            
+          }
+          else if(Days[i]>jouractuel.getDay()){
+            jouralarme=Days[i];
+             boucle=false
+            }
+          i++;
+          } 
+        }
+        if (jouralarme==1){
+          $("#jouralarme").text("Lundi à ");
+        }
+        if (jouralarme==2){
+          $("#jouralarme").text("Mardi à ");
+        }
+        if (jouralarme==3){
+          $("#jouralarme").text("Mercredi à ");
+        }
+        if (jouralarme==4){
+          $("#jouralarme").text("Jeudi à ");
+        }
+        if (jouralarme==5){
+          $("#jouralarme").text("Vendredi à ");
+        }
+        if (jouralarme==6){
+          $("#jouralarme").text("Samedi à ");
+        }
+        if(jouralarme==0){
+          $("#jouralarme").text("Dimanche à ");
+        }
+      }        
+    }
 
  
     constellation.connection.stateChanged(function (change) {
@@ -74,14 +134,17 @@ var bigSleeper=false;
      //on consomme le state object 'IsRinging' : si le réveil sonne, on passe à la page 0
       constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "Brain", "Alarm", "*",function (so) {
         var IR = so.Value.IsRinging;
+        Heure=so.Value.AlarmHour;
+        Minutes=so.Value.AlarmMinutes;
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
            if(so.Value.AlarmHour<10 & so.Value.AlarmHour>0){so.Value.AlarmHour='0'+so.Value.AlarmHour};
             if(so.Value.AlarmMinutes<10 & so.Value.AlarmMinutes>0){so.Value.AlarmMinutes='0'+so.Value.AlarmMinutes};
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
+        prochainjour();
         var min=so.Value.AlarmMinutes;
         $("#heure").text(so.Value.AlarmHour);
-        $("#min").text((min<10?'0':'')+min);
+        $("#min").text(min);
         console.log("is ringing est detecte")
         console.log( so);
         if (IR) {
@@ -123,7 +186,6 @@ Paramètres = function(){
   $("#page3").show();
 
   if($("#activation").is(":checked")){
-    console.log("bjr");
     $("#hidemodeauto").css("display","block");
     $("#audiofiles").css("display","block");
     $("#hideGD").css("display","block");
@@ -209,6 +271,7 @@ $("#valider").click(function(){
     if ($("#dimanche").is(":checked")){
       Days.push(0);
     }
+    prochainjour();
   });
 
 
