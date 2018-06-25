@@ -88,6 +88,9 @@ var bigSleeper=false;
         if(jouralarme==0){
           $("#jouralarme").text("Dimanche à ");
         }
+      }
+      else{
+        $("#jouralarme").text("");
       }        
     }
 
@@ -134,6 +137,7 @@ var bigSleeper=false;
      //on consomme le state object 'IsRinging' : si le réveil sonne, on passe à la page 0
       constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "Brain", "Alarm", "*",function (so) {
         var IR = so.Value.IsRinging;
+
         Heure=so.Value.AlarmHour;
         Minutes=so.Value.AlarmMinutes;
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -143,8 +147,17 @@ var bigSleeper=false;
         
         prochainjour();
         var min=so.Value.AlarmMinutes;
-        $("#heure").text(so.Value.AlarmHour);
-        $("#min").text(min);
+        if (Heure==-1){
+          $("#horloge").css("display", "none");
+          console.log("je suis dans le if");
+        }
+        else{
+          $("#horloge").css("display", "block");
+          console.log("je suis dans le else")
+          $("#heure").text(Heure);
+          $("#min").text(Minutes);
+        }
+        
         console.log("is ringing est detecte")
         console.log( so);
         if (IR) {
