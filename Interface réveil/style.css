@@ -4,6 +4,44 @@
 	align-items: center;
 	justify-content: center;
 	overflow-y:hidden;
+	border-radius: 1em;
+}
+
+#boutonstop
+{
+    position: absolute;
+    top: 50px;
+    left: 80px;
+    width: 280px;
+    height: 158px;
+    font-size : 2.5em;
+}
+#boutonsnooze1
+{
+    position: absolute;
+    top: 50px;
+    left: 400px;
+    width: 280px;
+    height: 158px;
+    font-size : 2.5em;
+}
+#boutonsnooze2
+{
+    position: absolute;
+    top: 250px;
+    left: 80px;
+    width: 280px;
+    height: 158px;
+    font-size : 2.5em;
+}
+#boutonsnooze3
+{
+    position: absolute;
+    top: 250px;
+    left: 400px;
+    width: 280px;
+    height: 158px;
+    font-size : 2.5em;
 }
 
 #page1 
@@ -26,6 +64,7 @@ body
 {
 	font-family: Arial;
 	font-size: 1em;
+	padding: 0.4em;
 }
 @font-face
 {
@@ -53,14 +92,16 @@ body
 {
 	margin-top:40px;
 	font-size: 2em;
+	padding: 0.4em;
 }
 
 #Agenda
 {
-	font-size: 3em;
+	font-size: 2.5em;
 	display:flex;
 	flex-direction: column;
 	justify-content: space-between;
+	padding: 0.4em;
 }
 
 #AgendaNom
@@ -140,4 +181,9 @@ justify-content: space-around;
 #param
 {
 	margin-left: 80px;
+}
+
+h3
+{
+padding: 15px;
 }

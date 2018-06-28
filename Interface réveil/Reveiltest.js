@@ -21,7 +21,7 @@ var bigSleeper=false;
     var temps;
     var adresse;
     console.log(bigSleeper);
-    var constellation = $.signalR.createConstellationConsumer("http://localhost:8088", "123456789", "Test API JS");
+    var constellation = $.signalR.createConstellationConsumer("http://192.168.43.73:8088", "1234", "Web");
 
 
     function myFunction(){
@@ -98,7 +98,7 @@ var bigSleeper=false;
     constellation.connection.stateChanged(function (change) {
       if (change.newState === $.signalR.connectionState.connected) {
         console.log("Je suis connecté");
-        constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "DayInfo", "NameDay", "*", function (so) {
+        constellation.client.registerStateObjectLink("*", "DayInfo", "NameDay", "*", function (so) {
         console.log(so);
         $("#InfoName").text(so.Value);
       });
@@ -116,13 +116,13 @@ var bigSleeper=false;
       var heures=HeureSonnerie.getHours();
           // Snippet compliant from the API 1.8.2 (Constellation-1.8.2.js) 
  
-      constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "Brain", "Parametres_reveil", "*",function(so){
+      constellation.client.registerStateObjectLink("*", "Brain", "Parametres_reveil", "*",function(so){
         console.log(so);
       });
  
       document.getElementById("valider").addEventListener("click", myFunction)
       
-      constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "DayInfo", "SunInfo", "*", function (so) {
+      constellation.client.registerStateObjectLink("*", "DayInfo", "SunInfo", "*", function (so) {
         console.log(so);
         var d = new Date(so.Value.Date);
         $("#year").text(d.getFullYear());
@@ -135,13 +135,13 @@ var bigSleeper=false;
       constellation.server.subscribeMessages("Reveil");
   
      //on consomme le state object 'IsRinging' : si le réveil sonne, on passe à la page 0
-      constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "Brain", "Alarm", "*",function (so) {
+      constellation.client.registerStateObjectLink("*", "Brain", "Alarm", "*",function (so) {
         var IR = so.Value.IsRinging;
-
         Heure=so.Value.AlarmHour;
         Minutes=so.Value.AlarmMinutes;
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-           if(so.Value.AlarmHour<10 & so.Value.AlarmHour>0){so.Value.AlarmHour='0'+so.Value.AlarmHour};
+           if(so.Value.AlarmHour<10 & so.Value.AlarmHour>0)
+            {so.Value.AlarmHour='0'+so.Value.AlarmHour};
             if(so.Value.AlarmMinutes<10 & so.Value.AlarmMinutes>0){so.Value.AlarmMinutes='0'+so.Value.AlarmMinutes};
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
@@ -155,7 +155,7 @@ var bigSleeper=false;
           $("#horloge").css("display", "block");
           console.log("je suis dans le else")
           $("#heure").text(Heure);
-          $("#min").text(Minutes);
+          $("#min").text((Minutes<10?'0':'')+Minutes);//
         }
         
         console.log("is ringing est detecte")
@@ -165,9 +165,15 @@ var bigSleeper=false;
           $("#page0").css("display", "block"); 
           console.log("test");         
         }
+        else
+        {
+            player.pause();
+            player.currentTime = 0;
+            $("#page0").css("display", "none"); 
+        }  
       });
 
-      constellation.client.registerStateObjectLink("DESKTOP-CI66GL2", "GoogleCalendar", "Events", "*", function (so) {
+      constellation.client.registerStateObjectLink("*", "GoogleCalendar", "Events", "*", function (so) {
         console.log(so);
         $("#AgendaNom").text(so.Value[0].Nom);
         $("#DateDebut").text(so.Value[0].DateDebut);
@@ -194,19 +200,17 @@ var bigSleeper=false;
     });
         
 
-Paramètres = function(){
+$("#next2").on('click touch tap touchstart touchend hold',function(){
   $("#page2").hide();
   $("#page3").show();
-
   if($("#activation").is(":checked")){
+    console.log("bjr");
     $("#hidemodeauto").css("display","block");
     $("#audiofiles").css("display","block");
     $("#hideGD").css("display","block");
-
     if($("#modeauto").is(":checked")){
       $("#HideTime").css("display","block");
-      $("#jours").css("display","block");
-      
+      $("#jours").css("display","block");      
     }
     else{
       $("#HideTime").css("display","none");
@@ -221,7 +225,7 @@ Paramètres = function(){
     $("#jours").css("display","none");
   }
   
-}
+  });
  
 $("#activation").change(function() {
     if(this.checked) {
@@ -242,16 +246,16 @@ $("#activation").change(function() {
 
 $("#modeauto").change(function(){
   if(this.checked){
-    $("#jours").css("display","block");
     $("#HideTime").css("display","block");
+    $("#jours").css("display","block");
   }
   else{
-    $("#jours").css("display","none");
     $("#HideTime").css("display","none");
+    $("#jours").css("display","none");
   }
 });
 
-$("#valider").click(function(){
+$("#valider").on('click touch tap touchstart touchend hold',function(){
     bigSleeper=document.getElementById("grosdormeur").checked;
     modeauto=document.getElementById("modeauto").checked;
     activation=document.getElementById("activation").checked;
@@ -284,36 +288,51 @@ $("#valider").click(function(){
     if ($("#dimanche").is(":checked")){
       Days.push(0);
     }
-    prochainjour();
   });
 
 
   window.onload=function() {
             horloge('div_horloge');
                constellation.connection.start();
-            $("#boutonstop").on("click", ()=>{
+            $("#boutonstop").on('click touch tap touchstart touchend hold', ()=>{
             //message stopAlarm envoyé a constellation
             player.pause();
+            player.currentTime = 0;
             $("#page0").css("display", "none"); 
             constellation.server.sendMessage({ Scope: 'Package', Args: ['Brain'] }, 'StopAlarm');
             });
             //$("#page0").get(0).style.display = "none";
-            $("#boutonsnooze").on("click", ()=>{
+            $("#boutonsnooze1").on('click touch tap touchstart touchend hold', ()=>{
             //message SnoozeAlarm envoyé a constellation
             player.pause();
+            player.currentTime = 0;
             $("#page0").css("display", "none"); 
             constellation.server.sendMessage({ Scope: 'Package', Args: ['Brain'] }, 'SnoozeAlarm');
             });
+            $("#boutonsnooze2").on('click touch tap touchstart touchend hold', ()=>{
+            //message SnoozeAlarm envoyé a constellation
+            player.pause();
+            player.currentTime = 0;
+            $("#page0").css("display", "none"); 
+            constellation.server.sendMessage({ Scope: 'Package', Args: ['Brain'] }, 'SnoozeAlarmDef', 10);
+            });
+            $("#boutonsnooze3").on('click touch tap touchstart touchend hold', ()=>{
+            //message SnoozeAlarm envoyé a constellation
+            player.pause();
+            player.currentTime = 0;
+            $("#page0").css("display", "none"); 
+            constellation.server.sendMessage({ Scope: 'Package', Args: ['Brain'] }, 'SnoozeAlarmDef', 15);
+            });
 
-            $("#next1").click(function() {
+            $("#next1").on('click touch tap touchstart touchend hold', function() {
               $("#page1").hide();
               $("#page2").show();
             })
-            $("#back").click(function() {
+            $("#back").on('click touch tap touchstart touchend hold',function() {
               $("#page2").hide();
               $("#page1").show();
             })
-            $("#back2").click(function() {
+            $("#back2").on('click touch tap touchstart touchend hold',function() {
               $("#page3").hide();
               $("#page2").show();
             })
