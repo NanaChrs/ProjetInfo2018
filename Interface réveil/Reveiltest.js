@@ -118,6 +118,16 @@ var bigSleeper=false;
  
       constellation.client.registerStateObjectLink("*", "Brain", "Parametres_reveil", "*",function(so){
         console.log(so);
+        if (bigSleeper){
+          $("#boutonsnooze1").css("display", "none");
+          $("#boutonsnooze2").css("display", "none");
+          $("#boutonsnooze3").css("display", "none");
+        }
+        else{
+          $("#boutonsnooze1").css("display", "block");
+          $("#boutonsnooze2").css("display", "block");
+          $("#boutonsnooze3").css("display", "block");
+        }
       });
  
       document.getElementById("valider").addEventListener("click", myFunction)
@@ -158,7 +168,6 @@ var bigSleeper=false;
           $("#min").text((Minutes<10?'0':'')+Minutes);//
         }
         
-        console.log("is ringing est detecte")
         console.log( so);
         if (IR) {
           player.play();
@@ -178,7 +187,7 @@ var bigSleeper=false;
         $("#AgendaNom").text(so.Value[0].Nom);
         $("#DateDebut").text(so.Value[0].DateDebut);
         $("#DateFin").text(so.Value[0].DateFin);
-        $("#Lieu").text(so.Value[0].Lieu);
+        $("#lieu").text(so.Value[0].Lieu);
         var lieu=so.Value[0].Lieu;
         if (lieu==null) {
           lieu="ISEN Lille";
@@ -296,10 +305,20 @@ $("#valider").on('click touch tap touchstart touchend hold',function(){
                constellation.connection.start();
             $("#boutonstop").on('click touch tap touchstart touchend hold', ()=>{
             //message stopAlarm envoyé a constellation
+            if (bigSleeper){
+              player.pause();
+              player.currentTime = 0;
+              $("#page0").css("display", "none"); 
+              constellation.server.sendMessage({ Scope: 'Package', Args: ['Brain'] }, 'SnoozeAlarmDef', 1);
+            }
+            else{
             player.pause();
             player.currentTime = 0;
             $("#page0").css("display", "none"); 
-            constellation.server.sendMessage({ Scope: 'Package', Args: ['Brain'] }, 'StopAlarm');
+            constellation.server.sendMessage({ Scope: 'Package', Args: ['Brain'] }, 'StopAlarm');}
+            var date = new Date();
+            var base = "Bonjour il est";
+            constellation.server.sendMessage({ Scope: 'Package', Args: ['S-Sound'] }, 'Speech',base.concat(String(date.getHours()),"heures",String(date.getMinutes()),". Vous êtes resplandissant aujourd'hui"));
             });
             //$("#page0").get(0).style.display = "none";
             $("#boutonsnooze1").on('click touch tap touchstart touchend hold', ()=>{
