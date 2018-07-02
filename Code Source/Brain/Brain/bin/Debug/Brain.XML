@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Brain</name>
+    </assembly>
+    <members>
+        <member name="M:Brain.Program.ChangeParametresServeur(Brain.ParametresReveil)">
+            <summary>
+            Permet de régler les paramètres de l'alarme
+            </summary>
+            <param name="newParametres">de type ParametresReveil { bool IsActive, bool BigSleeper, bool ManualMode</param>
+        </member>
+        <member name="M:Brain.Program.StopAlarm">
+            <summary>
+            Fonction qui permet d'éteindre l'alarme 
+            </summary>
+        </member>
+        <member name="M:Brain.Program.SnoozeAlarm">
+            <summary>
+            Permet de mettre l'alarme plus tard selon les paramètres précédement entrés
+            </summary>
+        </member>
+    </members>
+</doc>

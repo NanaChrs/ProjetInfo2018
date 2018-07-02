@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Package xmlns="http://schemas.myconstellation.io/Constellation/1.8/PackageManifest"
+         Name="GoogleCalendarNTraffic"
+         Version="1.0.3"
+         Author="Guillaume DUCATILLON"
+         URL="http://www.mywebsite.com"
+         Description="GoogleCalendarNTraffic Copyright ©  2018"
+         EnableControlHub="false">
+  <Compatibility constellationVersion="1.8" dotNetTargetPlatform="net45">
+    <Platforms>
+      <Platform id="Win32NT" isCompliant="true" />
+      <Platform id="Unix" isCompliant="true" />
+    </Platforms>
+  </Compatibility>
+  <Settings>
+    <Setting name="Interval de rafraichissement" type="Int32" defaultValue="300000" isRequired="true"></Setting>
+    <Setting name="Adresse de la maison" type="String" defaultValue="1 Vieux chemin des Loups 59270 Bailleul" isRequired="true"></Setting>
+    <Setting name="Nombre d'evenements" type="Int32" defaultValue ="3" description="Nombre d'évènements dont le traffic est calculé"></Setting>
+    <!-- Add your package's settings here -->
+  </Settings>
+</Package>

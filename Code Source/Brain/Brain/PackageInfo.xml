@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Package xmlns="http://schemas.myconstellation.io/Constellation/1.8/PackageManifest"
+         Name="Brain"
+         Version="1.4"
+         Author="Guillaume DUCATILLON"
+         URL="http://www.mywebsite.com"
+         Description="Brain Copyright ©  2018"
+         EnableControlHub="false">
+  <Compatibility constellationVersion="1.8" dotNetTargetPlatform="net40">
+    <Platforms>
+      <Platform id="Win32NT" isCompliant="true" />
+      <Platform id="Unix" isCompliant="true" />
+    </Platforms>
+  </Compatibility>
+  <Settings>
+    <Setting name="TpsPrep" type="Int32" description="Temps de préparation (en minutes) le matin en mode automatique" isRequired="true" defaultValue="40"></Setting>
+    <Setting name="HeureMaJ"  type="Int32"   description="Heure de rafraîchissement du package (Toutes les 24h à heure pile)" isRequired ="true" defaultValue="21"></Setting>
+    <Setting name="Snooze" type="Int32" description="Réglage du temps de snooze" isRequired="true" defaultValue="5"></Setting>
+    <Setting name="SnoozeBigSleeper" type="Int32" description="Réglage du temps de snooze en mode gros dormeur" isRequired="true" defaultValue="2"></Setting>
+  </Settings>
+</Package>

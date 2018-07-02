@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GoogleCalendarNTraffic</name>
+    </assembly>
+    <members>
+        <member name="M:GoogleCalendarNTraffic.Program.GetAgendaNTraffic(System.String)">
+            <summary>
+            Permet de mettre à jour le StateObject Events de Google CalendarNTraffic
+            </summary>
+        </member>
+    </members>
+</doc>

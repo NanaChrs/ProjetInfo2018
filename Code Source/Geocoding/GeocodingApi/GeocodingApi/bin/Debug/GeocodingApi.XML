@@ -4,5 +4,11 @@
         <name>GeocodingApi</name>
     </assembly>
     <members>
+        <member name="M:GeocodingApi.Program.CoordoneesGPS(System.String)">
+            <summary>
+            Permet de récupérer les coordonnées Latitude/Longitude d'une adresse
+            </summary>
+            <param name="adress"></param>
+        </member>
     </members>
 </doc>

@@ -1,27 +1,24 @@
-﻿using Constellation;
-using Constellation.Package;
+﻿using Constellation.Package;
 using Newtonsoft.Json;
 using System;
-using System.Threading;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
 
 namespace GeocodingApi
 {
 
     public partial class Program : PackageBase
     {
-
+        /// <summary>
+        /// Permet de récupérer les coordonnées Latitude/Longitude d'une adresse
+        /// </summary>
+        /// <param name="adress"></param>
         [MessageCallback]
         public Coordonnes CoordoneesGPS(string adress)
         {
             var coord = new Coordonnes();
             string APIkey = "AIzaSyB_oKCbvTHtGuIg0vbRsnqD9JgIQNOWMno";
-            var Adresse = adress.Replace(" ", "+");
-            var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + Adresse + "&key=" + APIkey;
+            adress = adress.Replace(" ", "+");
+            var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + adress + "+&key=" + APIkey;
             using (WebClient webClient = new System.Net.WebClient())
             {
                 WebClient n = new WebClient();
@@ -43,21 +40,17 @@ namespace GeocodingApi
                     catch
                     {
                         PackageHost.WriteError("Impossible de push le stateobject");
+                        
                     }
-
-
                 }
                 else
                 {
                     PackageHost.WriteWarn("Aucune correspondance GPS trouvée");
                 }
-
                 return null;
-
             }
-
-
-
+            
+            
         }
 
     }

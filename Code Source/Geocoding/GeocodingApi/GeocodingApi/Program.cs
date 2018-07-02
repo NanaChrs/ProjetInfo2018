@@ -33,13 +33,9 @@ namespace GeocodingApi
             {
                 Console.Write("Tentative de connection échouée");
             }
-            //MaJ au démarrage
-          
-
-            //Boucle d'actualisation
-            while (PackageHost.IsRunning)
+            while(PackageHost.IsConnected)
             {
-                
+
             }
 
         }
